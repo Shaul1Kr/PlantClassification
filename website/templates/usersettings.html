@@ -1,0 +1,76 @@
+{% extends "base.html" %} {% block title %}User Settings{% endblock %} {% block
+content %}
+<div class="page" style="margin-top: 10%; gap: 45px; display: grid">
+  <div class="settings" style="justify-content: center; display: flex">
+    <p
+      style="
+        width: 305px;
+        height: 59px;
+        font-family: Roboto;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 50px;
+        line-height: 59px;
+        text-decoration-line: underline;
+      "
+    >
+      User Settings
+    </p>
+  </div>
+  <div class="fill" style="display: grid; justify-content: center">
+    <div class="email" style="display: flex; gap: 15%">
+      <p
+        style="
+          width: 124px;
+          height: 59px;
+          font-family: Roboto;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 50px;
+          line-height: 59px;
+        "
+      >
+        Email
+      </p>
+      <input
+        type="email"
+        placeholder="Enter New Email"
+        style="width: 448px; height: 47px"
+      />
+    </div>
+    <div class="password" style="display: flex">
+      <p
+        style="
+          width: 221px;
+          height: 59px;
+          font-family: Roboto;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 50px;
+          line-height: 59px;
+        "
+      >
+        Password
+      </p>
+      <input
+        type="password"
+        placeholder="Password"
+        style="width: 448px; height: 47px"
+      />
+    </div>
+    <div class="submit" style="display: flex; justify-content: center">
+      <input
+        type="submit"
+        value="Change"
+        style="
+          width: 100%;
+          height: 47px;
+          background: #65bf43;
+          box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+          color: #ffffff;
+        "
+      />
+    </div>
+  </div>
+</div>
+{% endblock %}
