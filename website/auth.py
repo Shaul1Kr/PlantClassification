@@ -21,7 +21,6 @@ def login():
         user = User.query.filter_by(email=email).first()
         if user:
             if check_password_hash(user.password, password):
-                flash('Logged in successfully!')
                 login_user(user, remember=True)
                 return redirect(url_for('views.homePage'))
 
@@ -37,6 +36,7 @@ def login():
 @login_required
 def logout():
     logout_user()
+    flash('You successfully logout.')
     return redirect(url_for('auth.login'))
 
 
