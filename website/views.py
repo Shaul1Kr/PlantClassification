@@ -33,3 +33,10 @@ def photos():
 @login_required
 def userSettings():
     return render_template("usersettings.html" , user=current_user)
+
+# About page
+
+@views.route("/about")
+@login_required
+def about():
+    return render_template("about.html" , user=current_user)
