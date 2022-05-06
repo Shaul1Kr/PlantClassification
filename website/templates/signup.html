@@ -103,6 +103,15 @@
           />
         </div>
         <div
+          style="display: flex; justify-content: center; align-items: center"
+        >
+          {% with messages = get_flashed_messages() %} {% if messages %} {% for
+          message in messages %}
+          <p style="font-size: 23px; color: red">{{ message }}</p>
+
+          {% endfor %} {% endif %} {% endwith %}
+        </div>
+        <div
           class="buttons"
           style="
             display: grid;
