@@ -24,7 +24,7 @@ def homePage():
 def photos():
     photos = ["static/photos/1.jpg", "static/photos/2.jpg", "static/photos/3.jpg",
               "static/photos/4.jpg", "static/photos/5.jpg", "static/photos/6.jpg", "static/photos/7.jpg"]
-    return render_template("photos.html", photos=photos)
+    return render_template("photos.html", photos=photos , user=current_user)
 
 # User Settings
 
@@ -32,4 +32,4 @@ def photos():
 @views.route("/setting")
 @login_required
 def userSettings():
-    return render_template("usersettings.html")
+    return render_template("usersettings.html" , user=current_user)
