@@ -40,3 +40,11 @@ def userSettings():
 @login_required
 def about():
     return render_template("about.html" , user=current_user)
+
+
+# Contact page
+
+@views.route("/contact")
+@login_required
+def contact():
+    return render_template("contact.html" , user=current_user)
