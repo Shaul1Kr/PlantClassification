@@ -1,72 +1,108 @@
 {% extends "base.html" %} {% block title %}Home Page{% endblock %} {% block
 content %}
-<div style="display: flex; justify-content: center; margin-top: 40px">
-  <p
-    style="
-      width: 371px;
-      height: 29px;
-      font-family: Roboto;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 25px;
-      line-height: 29px;
-      color: #000000;
-    "
-  >
-    Drop image here or click to select
-  </p>
-</div>
-<div class="DD" style="display: flex; justify-content: center">
+
+<form method="post" enctype="multipart/form-data">
+  <div style="display: flex; justify-content: center; margin-top: 40px">
+    <div
+      class="preview"
+      style="
+        width: 425px;
+        height: 299px;
+        background: #ffffff;
+        border: 2px dashed #000000;
+        margin-top: 45px;
+        justify-content: center;
+        display: flex;
+        align-items: center;
+      "
+    >
+      <input
+        type="file"
+        id="image_uploads"
+        name="image_uploads"
+        accept=".jpg, .jpeg, .png"
+      />
+    </div>
+  </div>
+
   <div
-    class="fileUpload"
-    style="
-      width: 425px;
-      height: 299px;
-      background: #ffffff;
-      border: 2px dashed #000000;
-      margin-top: 45px;
-      justify-content: center;
-      display: flex;
-      align-items: center;
-    "
+    class="button"
+    style="display: flex; justify-content: center; margin-top: 45px; gap: 25px"
   >
     <input
-      style="height: inherit; width: inherit; padding: 110px"
-      type="file"
-      id="img"
-      name="img"
-      accept="image/*"
+      type="submit"
+      value="Search"
+      style="
+        width: 205px;
+        height: 63px;
+        background: #65bf43;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        color: #ffffff;
+      "
+    />
+    <input
+      value="Clear"
+      style="
+        width: 205px;
+        height: 63px;
+        background: #65bf43;
+        box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
+        color: #ffffff;
+        text-align: center;
+        cursor: pointer;
+        border-color: buttonborder;
+      "
+      onClick="window.location.href=window.location.href"
     />
   </div>
-</div>
-<div
-  class="button"
-  style="display: flex; justify-content: center; margin-top: 45px; gap: 25px"
->
-  <input
-    type="submit"
-    value="Search"
-    style="
-      width: 205px;
-      height: 63px;
-      background: #65bf43;
-      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-      color: #ffffff;
-    "
-  />
+</form>
+<script>
+  const input = document.querySelector("input");
+  const preview = document.querySelector(".preview");
+  input.addEventListener("change", updateImageDisplay);
+  const fileTypes = [
+    "image/apng",
+    "image/bmp",
+    "image/gif",
+    "image/jpeg",
+    "image/pjpeg",
+    "image/png",
+    "image/svg+xml",
+    "image/tiff",
+    "image/webp",
+    "image/x-icon",
+  ];
 
-  <input
-    type="submit"
-    value="Clear"
-    style="
-      width: 205px;
-      height: 63px;
-      background: #65bf43;
-      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-      color: #ffffff;
-    "
-    onClick="window.location.href=window.location.href"
-  />
-</div>
+  function validFileType(file) {
+    return fileTypes.includes(file.type);
+  }
 
+  function updateImageDisplay() {
+    while (preview.firstChild) {
+      preview.removeChild(preview.firstChild);
+    }
+
+    const curFiles = input.files;
+    if (curFiles.length === 0) {
+      const para = document.createElement("p");
+      para.textContent = "No files currently selected for upload";
+      preview.appendChild(para);
+    } else {
+      for (const file of curFiles) {
+        const listItem = document.createElement("div");
+        preview.appendChild(listItem);
+        const para = document.createElement("p");
+        if (validFileType(file)) {
+          const image = document.createElement("img");
+          image.style.cssText = "width: 425px;height: 299px;";
+          image.src = URL.createObjectURL(file);
+          listItem.appendChild(image);
+        } else {
+          para.textContent = `File name ${file.name}: Not a valid file type. Update your selection.`;
+          listItem.appendChild(para);
+        }
+      }
+    }
+  }
+</script>
 {% endblock %}
