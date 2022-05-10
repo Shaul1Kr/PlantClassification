@@ -56,9 +56,22 @@ content %}
     onClick="window.location.href=window.location.href"
   />
 </div>
+<div style="display: grid; justify-content: center; margin-left: 30px">
+  <div id="description" style="font-size: 30px"></div>
+  <div id="description1" style="font-size: 30px"></div>
+  <div id="description2" style="font-size: 30px"></div>
+  <div id="description3" style="font-size: 30px"></div>
+  <div id="description4" style="font-size: 30px"></div>
+</div>
+
 <script>
   const input = document.querySelector("input");
   const preview = document.querySelector(".preview");
+  const description = document.getElementById("description");
+  const description1 = document.getElementById("description1");
+  const description2 = document.getElementById("description2");
+  const description3 = document.getElementById("description3");
+  const description4 = document.getElementById("description4");
   let submitFile;
   input.addEventListener("change", updateImageDisplay);
   const fileTypes = [
@@ -139,13 +152,21 @@ content %}
       .then((resp) => {
         if (resp.ok)
           resp.json().then((data) => {
-            console.log("DATA", data);
+            displayDescription(data);
           });
       })
       .catch((err) => {
         console.log("An error occured", err.message);
         window.alert("Oops! Something went wrong.");
       });
+  }
+  function displayDescription(data) {
+    // display the result
+    description.innerHTML = data.result[1];
+    description1.innerHTML = data.result[2];
+    description2.innerHTML = data.result[3];
+    description3.innerHTML = data.result[4];
+    description4.innerHTML = data.result[5];
   }
 </script>
 {% endblock %}

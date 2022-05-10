@@ -90,7 +90,6 @@ def predict():
     if request.method == 'POST':
         # Get the image from post request
         img = base64_to_pil(request.json)
-        print(img)
 
         # Make prediction
         preds1 = model_predict1(img, model_1)
