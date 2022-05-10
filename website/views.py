@@ -1,18 +1,21 @@
+from cv2 import log
 from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for, session
 from flask_login import login_required, current_user
+from sqlalchemy import null
 from werkzeug.security import generate_password_hash, check_password_hash
 import random
 from . import db
 import json
 from .models import User
+import pandas as pd
 # TensorFlow and tf.keras
 import tensorflow as tf
 from tensorflow import keras
 
-from tensorflow.keras.models import load_model
-from tensorflow.keras.preprocessing import image
 import numpy as np
 from util import base64_to_pil
+
+from tensorflow.keras.preprocessing import image
 
 
 views = Blueprint('views', __name__)
@@ -20,9 +23,15 @@ views = Blueprint('views', __name__)
 # Model saved with Keras model.save()
 MODEL_PATH_1 = 'website/model/bestmodel_23class.hdf5'
 # Load my own trained model
-model = keras.models.load_model(MODEL_PATH_1)
+model_1 = keras.models.load_model(MODEL_PATH_1)
 print('Model loaded.. Check http://127.0.0.1:5000/')
 print('Model loaded. Start serving...')
+
+# Declare class names for labels
+class_dict = {'Beeblossom': 0, 'Begonia Maculata': 1, 'Coleus': 2, 'Crown of thorns': 3, 'Elephant_s Ear': 4, 'House Leek': 5, 'Jade Plant': 6, 'Limonium sinuatum': 7, 'Lucky Bamboo': 8, 'Mesquites': 9, 'Moon Cactus': 10, 'Myoporum': 11,
+              'Nerve Plant': 12, 'Paddle Plant': 13, 'Parlor Palm': 14, 'Pennisetum': 15, 'Poinsettia': 16, 'Sansevieria Ballyi': 17, 'String Of Banana': 18, 'Venus Fly Trap': 19, 'Zebra Cactus': 20, 'echeveria': 21, 'woolly senecio': 22}
+class_names = list(class_dict.keys())
+
 
 def model_predict1(img, model):
     # Preprocessing the image
@@ -34,22 +43,21 @@ def model_predict1(img, model):
 
 # Home page
 
+
 @views.route("/homepage")
 @login_required
 def homePage():
-    # Make prediction
-    #preds1 = model_predict1(base64_to_pil('website/static/photos/1.jpg'), model)
-    #print(preds1)
     return render_template("homepage.html", user=current_user)
 
 # Photos page
+
 
 @views.route("/photos")
 @login_required
 def photos():
     photos = ["static/photos/1.jpg", "static/photos/2.jpg", "static/photos/3.jpg",
               "static/photos/4.jpg", "static/photos/5.jpg", "static/photos/6.jpg", "static/photos/7.jpg"]
-    
+
     return render_template("photos.html", photos=photos, user=current_user)
 
 # User Settings
@@ -77,3 +85,33 @@ def contact():
     return render_template("contact.html", user=current_user)
 
 
+@views.route('/predict', methods=['GET', 'POST'])
+def predict():
+    if request.method == 'POST':
+        # Get the image from post request
+        img = base64_to_pil(request.json)
+        print(img)
+
+        # Make prediction
+        preds1 = model_predict1(img, model_1)
+        index_pred1 = np.argmax(preds1)
+
+        # Confidence
+        confidence1 = "{}".format(preds1[0][index_pred1])
+        index = 0
+        result = class_names[index_pred1]
+        index = index_pred1
+        confidence = float(confidence1)*100
+
+        # Read description from excel file according to the prediction of given image
+        data = pd.read_excel(r'./website/descriptions.xlsx')
+        df = pd.DataFrame(
+            data, columns=['Label', 'Class', 'Scientific name', 'Genus', 'Habitat'])
+        row = df.iloc[index]
+        myDes = []
+        myDes.append(round(confidence, 2))
+        myDes.extend([row[1], row[2], row[3], row[4]])
+
+        # Return predicted class, confidence and description.
+        return jsonify(result=[result, 'Class:\t'+str(myDes[1]), 'Confidence:\t'+str(myDes[0])+'%', 'Scientific name:\t'+str(myDes[2]), 'Genus:\t'+str(myDes[3]), 'Habitat:\t'+str(myDes[4])])
+    return None

@@ -1,64 +1,65 @@
 {% extends "base.html" %} {% block title %}Home Page{% endblock %} {% block
 content %}
 
-<form method="post" enctype="multipart/form-data">
-  <div style="display: flex; justify-content: center; margin-top: 40px">
-    <div
-      class="preview"
-      style="
-        width: 425px;
-        height: 299px;
-        background: #ffffff;
-        border: 2px dashed #000000;
-        margin-top: 45px;
-        justify-content: center;
-        display: flex;
-        align-items: center;
-      "
-    >
-      <input
-        type="file"
-        id="image_uploads"
-        name="image_uploads"
-        accept=".jpg, .jpeg, .png"
-      />
-    </div>
-  </div>
-
+<div style="display: flex; justify-content: center; margin-top: 40px">
   <div
-    class="button"
-    style="display: flex; justify-content: center; margin-top: 45px; gap: 25px"
+    class="preview"
+    style="
+      width: 425px;
+      height: 299px;
+      background: #ffffff;
+      border: 2px dashed #000000;
+      margin-top: 45px;
+      justify-content: center;
+      display: flex;
+      align-items: center;
+    "
   >
     <input
-      type="submit"
-      value="Search"
-      style="
-        width: 205px;
-        height: 63px;
-        background: #65bf43;
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-        color: #ffffff;
-      "
-    />
-    <input
-      value="Clear"
-      style="
-        width: 205px;
-        height: 63px;
-        background: #65bf43;
-        box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
-        color: #ffffff;
-        text-align: center;
-        cursor: pointer;
-        border-color: buttonborder;
-      "
-      onClick="window.location.href=window.location.href"
+      type="file"
+      style="width: 425px; height: 299px; padding: 130px 100px"
+      id="image_uploads"
+      name="image_uploads"
+      accept=".jpg, .jpeg, .png"
     />
   </div>
-</form>
+</div>
+
+<div
+  class="button"
+  style="display: flex; justify-content: center; margin-top: 45px; gap: 25px"
+>
+  <input
+    type="button"
+    value="Search"
+    style="
+      width: 205px;
+      height: 63px;
+      background: #65bf43;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      color: #ffffff;
+    "
+    onclick="submitImage();"
+  />
+  <input
+    value="Clear"
+    style="
+      width: 205px;
+      height: 63px;
+      background: #65bf43;
+      box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
+      color: #ffffff;
+      text-align: center;
+      cursor: pointer;
+      border-color: buttonborder;
+    "
+    onClick="window.location.href=window.location.href"
+  />
+</div>
 <script>
   const input = document.querySelector("input");
   const preview = document.querySelector(".preview");
+  let submitFile;
   input.addEventListener("change", updateImageDisplay);
   const fileTypes = [
     "image/apng",
@@ -93,16 +94,58 @@ content %}
         preview.appendChild(listItem);
         const para = document.createElement("p");
         if (validFileType(file)) {
-          const image = document.createElement("img");
-          image.style.cssText = "width: 425px;height: 299px;";
-          image.src = URL.createObjectURL(file);
-          listItem.appendChild(image);
+          previewFile(file, listItem);
         } else {
           para.textContent = `File name ${file.name}: Not a valid file type. Update your selection.`;
           listItem.appendChild(para);
         }
       }
     }
+  }
+  function previewFile(file, listItem) {
+    // show the preview of the image
+    var fileName = encodeURI(file.name);
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      const image = document.createElement("img");
+      image.style.cssText = "width: 425px;height: 299px;";
+      image.id = "image-display";
+      image.src = URL.createObjectURL(file);
+      submitFile = reader.result;
+      listItem.appendChild(image);
+    };
+  }
+  function submitImage() {
+    // action for the submit button
+    var imageDisplay = document.getElementById("image-display");
+
+    if (!imageDisplay || !submitFile.startsWith("data")) {
+      window.alert("Please select an image before submit.");
+      return;
+    }
+
+    // call the predict function of the backend
+    predictImage(submitFile);
+  }
+  function predictImage(image) {
+    fetch("/predict", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(image),
+    })
+      .then((resp) => {
+        if (resp.ok)
+          resp.json().then((data) => {
+            console.log("DATA", data);
+          });
+      })
+      .catch((err) => {
+        console.log("An error occured", err.message);
+        window.alert("Oops! Something went wrong.");
+      });
   }
 </script>
 {% endblock %}
