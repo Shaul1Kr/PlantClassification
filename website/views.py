@@ -43,14 +43,12 @@ def model_predict1(img, model):
 
 # Home page
 
-
 @views.route("/homepage")
 @login_required
 def homePage():
     return render_template("homepage.html", user=current_user)
 
 # Photos page
-
 
 @views.route("/photos")
 @login_required
@@ -62,14 +60,12 @@ def photos():
 
 # User Settings
 
-
 @views.route("/setting")
 @login_required
 def userSettings():
     return render_template("usersettings.html", user=current_user)
 
 # About page
-
 
 @views.route("/about")
 @login_required
@@ -78,12 +74,12 @@ def about():
 
 # Contact page
 
-
 @views.route("/contact")
 @login_required
 def contact():
     return render_template("contact.html", user=current_user)
 
+# Pradict page
 
 @views.route('/predict', methods=['GET', 'POST'])
 def predict():
@@ -114,3 +110,28 @@ def predict():
         # Return predicted class, confidence and description.
         return jsonify(result=[result, 'Class:\t'+str(myDes[1]), 'Confidence:\t'+str(myDes[0])+'%', 'Scientific name:\t'+str(myDes[2]), 'Genus:\t'+str(myDes[3]), 'Habitat:\t'+str(myDes[4])])
     return None
+
+#User Management page
+
+@views.route('/userManagement', methods=['GET', 'POST'])
+@login_required
+def userManagment():
+    if current_user.admin == True:
+        if request.method == 'POST':
+            if request.form.get("editphide")=="1":##edit a user
+                user=User.query.filter_by(id = int(request.form.get("editId"))).first()
+                user.email=request.form.get("email")
+                user.password=generate_password_hash( request.form.get("password"), method='sha256')
+                user.auth=request.form.get("admin")
+                db.session.add(user)
+                db.session.commit()
+            elif request.form.get("deletephide")=="1":##delete a user
+                user=User.query.filter_by(id = int(request.form.get("deleteId"))).first()
+                db.session.delete(user)
+                db.session.commit()
+            users=User.query.all()
+            return render_template("userManagment.html", user= current_user,alluser=users)
+        users = User.query.all()
+        return render_template("userManagment.html", user= current_user ,alluser=users)
+    else:
+        return render_template("homepage.html", user=current_user)

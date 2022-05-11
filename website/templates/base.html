@@ -25,6 +25,11 @@
           <li class="nav-item active">
             <a class="nav-link" href="/photos">Photos</a>
           </li>
+          {% if user.admin==true %}
+          <li class="nav-item active">
+            <a class="nav-link" href="/userManagement">User Managment</a>
+          </li>
+          {% endif %}
         </ul>
       </div>
       <div class="image">
