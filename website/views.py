@@ -2,11 +2,11 @@ from cv2 import log
 from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for, session
 from flask_login import login_required, current_user
 from sqlalchemy import null
+from .models import Photos, User
 from werkzeug.security import generate_password_hash, check_password_hash
 import random
 from . import db
 import json
-from .models import User
 import pandas as pd
 # TensorFlow and tf.keras
 import tensorflow as tf
@@ -46,15 +46,41 @@ def model_predict1(img, model):
 @views.route("/homepage")
 @login_required
 def homePage():
+    # def insertBLOB(userId, name, photo):
+    #     photo = convertToBinaryData(photo)
+    #     # print(photo)
+    #     newPhoto = Photos(userId=userId, name=name,photo=photo)
+    #     db.session.add(newPhoto)
+    #     db.session.commit()
+    #     # # Convert data into tuple format
+    #     # data_tuple = (empId, name, empPhoto, resume)
+    #     # cursor.execute(sqlite_insert_blob_query, data_tuple)
+    #     # sqliteConnection.commit()
+    #     # print("Image and file inserted successfully as a BLOB into a table")
+    #     # cursor.close()
+    # insertBLOB(1, "Smith", "D:/0_Begonia-Maculata.jpg")
     return render_template("homepage.html", user=current_user)
+
 
 # Photos page
 
 @views.route("/photos")
 @login_required
 def photos():
-    photos = ["static/photos/1.jpg", "static/photos/2.jpg", "static/photos/3.jpg",
-              "static/photos/4.jpg", "static/photos/5.jpg", "static/photos/6.jpg", "static/photos/7.jpg"]
+    # def readBlobData(userId):
+    #     record = Photos.query.filter_by(userId = userId).all()
+    #     print(record)
+    #     for row in record:
+    #         print("Id = ", row[0], "Name = ", row[1])
+    #         name = row[1]
+    #         photo = row[2]
+    #         print(photo)
+    #         # print("Storing employee image and resume on disk \n")
+    #         # photoPath = "E:\pynative\Python\photos\db_data\\" + name + ".jpg"
+    #         # writeTofile(photo, photoPath)
+
+    # readBlobData(1)
+    photos = ["static/photos/1.jpg", "static/photos/2.jpg", "static/photos/3.jpg","static/photos/4.jpg", "static/photos/5.jpg", "static/photos/6.jpg", "static/photos/7.jpg"]
 
     return render_template("photos.html", photos=photos, user=current_user)
 
@@ -135,3 +161,17 @@ def userManagment():
         return render_template("userManagment.html", user= current_user ,alluser=users)
     else:
         return render_template("homepage.html", user=current_user)
+
+
+
+def convertToBinaryData(filename):
+    # Convert digital data to binary format
+    with open(filename, 'rb') as file:
+        blobData = file.read()
+    return blobData
+
+def writeTofile(data, filename):
+    # Convert binary data to proper format and write it on Hard Disk
+    with open(filename, 'wb') as file:
+        file.write(data)
+    print("Stored blob data into: ", filename, "\n")
