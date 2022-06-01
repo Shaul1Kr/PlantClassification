@@ -2,5 +2,6 @@
 *.psd
 *.pdf
 *.xlsx
+*.hdf5
 /test
 /spec
