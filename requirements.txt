@@ -14,3 +14,6 @@ Flask==2.0.1
 Flask-Login==0.5.0
 Flask-SQLAlchemy==2.5.1
 Werkzeug==2.0.1
+opencv-contrib-python==4.5.4.60
+opencv-python==4.5.4.60
+openpyxl==3.0.7
