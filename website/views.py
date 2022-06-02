@@ -22,7 +22,7 @@ views = Blueprint('views', __name__)
 # Model saved with Keras model.save()
 MODEL_PATH_1 = '../website/model/bestmodel_23class.hdf5'
 # Load my own trained model
-model_1 = keras.models.load_model(MODEL_PATH_1)
+#model_1 = keras.models.load_model(MODEL_PATH_1)
 print('Model loaded.. Check http://127.0.0.1:5000/')
 print('Model loaded. Start serving...')
 
@@ -79,7 +79,7 @@ def photos():
     #         # writeTofile(photo, photoPath)
 
     # readBlobData(1)
-    photos = ["static/photos/1.jpg", "static/photos/2.jpg", "static/photos/3.jpg","static/photos/4.jpg", "static/photos/5.jpg", "static/photos/6.jpg", "static/photos/7.jpg"]
+    photos = ["../static/photos/1.jpg", "../static/photos/2.jpg", "../static/photos/3.jpg","../static/photos/4.jpg", "../static/photos/5.jpg", "../static/photos/6.jpg", "../static/photos/7.jpg"]
 
     return render_template("photos.html", photos=photos, user=current_user)
 
