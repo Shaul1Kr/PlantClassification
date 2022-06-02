@@ -1,4 +1,3 @@
-from cv2 import log
 from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for, session
 from flask_login import login_required, current_user
 from sqlalchemy import null
