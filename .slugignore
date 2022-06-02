@@ -3,5 +3,8 @@
 *.pdf
 *.xlsx
 *.hdf5
+*.db
+*.png
+*.md
 /test
 /spec
