@@ -1,5 +1,6 @@
 # Heres a comment
 *.psd
 *.pdf
+*.jpg
 /test
 /spec
