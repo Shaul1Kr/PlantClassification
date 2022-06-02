@@ -8,7 +8,7 @@ from . import db
 import json
 import pandas as pd
 # TensorFlow and tf.keras
-#import tensorflow as tf
+import tensorflow as tf
 from tensorflow import keras
 
 import numpy as np
