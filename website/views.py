@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for, session
 from flask_login import login_required, current_user
 from sqlalchemy import null
-from .models import Photos, User
+from .models import User
 from werkzeug.security import generate_password_hash, check_password_hash
 import random
 from . import db
@@ -20,8 +20,7 @@ from tensorflow.keras.preprocessing import image
 views = Blueprint('views', __name__)
 
 # Model saved with Keras model.save()
-#MODEL_PATH_1 = '../website/model/bestmodel_23class.hdf5'
-MODEL_PATH_1 = "../static/bestmodel_23class.hdf5"
+MODEL_PATH_1 = 'website\\model\\bestmodel_23class.hdf5'
 # Load my own trained model
 model_1 = keras.models.load_model(MODEL_PATH_1)
 print('Model loaded.. Check http://127.0.0.1:5000/')
