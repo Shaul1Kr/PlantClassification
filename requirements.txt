@@ -10,3 +10,4 @@ SQLAlchemy==1.4.10
 tensorflow-cpu==2.8.0
 Werkzeug==2.0.1
 protobuf==3.17.3
+Pillow==8.2.0
