@@ -14,7 +14,7 @@ from tensorflow import keras
 import numpy as np
 from util import base64_to_pil
 
-from keras.preprocessing import image
+from tensorflow.keras.preprocessing import image
 from keras.models import load_model
 
 
