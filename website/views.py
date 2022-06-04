@@ -22,8 +22,8 @@ views = Blueprint('views', __name__)
 # Model saved with Keras model.save()
 #MODEL_PATH_1 = './model/bestmodel_23class.hdf5'
 #MODEL_PATH_1 = '../model/bestmodel_23class.hdf5'
-##MODEL_PATH_1 = "website/static/bestmodel_23class.h5"
-MODEL_PATH_1 = "website/static/my_model"
+MODEL_PATH_1 = "website/static/bestmodel_23class.h5"
+# MODEL_PATH_1 = "website/static/my_model.h5"
 # Load my own trained model
 model_1 = keras.models.load_model(MODEL_PATH_1)
 
