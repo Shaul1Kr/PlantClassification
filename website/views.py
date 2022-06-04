@@ -14,7 +14,8 @@ from tensorflow import keras
 import numpy as np
 from util import base64_to_pil
 
-from tensorflow.keras.preprocessing import image
+from keras.preprocessing import image
+from keras.models import load_model
 
 
 views = Blueprint('views', __name__)
@@ -25,7 +26,7 @@ views = Blueprint('views', __name__)
 MODEL_PATH_1 = "website/static/bestmodel_23class.h5"
 # MODEL_PATH_1 = "website/static/my_model.h5"
 # Load my own trained model
-model_1 = keras.models.load_model(MODEL_PATH_1)
+model_1 = load_model(MODEL_PATH_1)
 
 print('Model loaded.. Check http://127.0.0.1:5000/')
 print('Model loaded. Start serving...')
