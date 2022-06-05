@@ -70,21 +70,14 @@ def homePage():
 @views.route("/photos")
 @login_required
 def photos():
-    record = Photos.query.filter_by(userId = userId).all()
-#     print(record)
-#     for row in record:
-#         print("Id = ", row[0], "Name = ", row[1])
-#         name = row[1]
-#         photo = row[2]
-#         print(photo)
-#         # print("Storing employee image and resume on disk \n")
-#         # photoPath = "E:\pynative\Python\photos\db_data\\" + name + ".jpg"
-#         # writeTofile(photo, photoPath)
-
-    # readBlobData(1)
-    photos = ["../static/photos/1.jpg", "../static/photos/2.jpg", "../static/photos/3.jpg","../static/photos/4.jpg", "../static/photos/5.jpg", "../static/photos/6.jpg", "../static/photos/7.jpg"]
-
-    return render_template("photos.html", photos=photos, user=current_user)
+    records = Photos.query.filter_by(userId = current_user.id).all()
+    all_photos = []
+    for photo_record in records:
+        photoPath = 'website/static/photos/' + photo_record.name
+        writeTofile(photo_record.photo, photoPath)
+        all_photos.append("../static/photos/" + photo_record.name)
+    print(all_photos)
+    return render_template("photos.html", photos=all_photos, user=current_user)
 
 # User Settings
 
