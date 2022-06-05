@@ -112,32 +112,31 @@ def contact():
 @views.route('/predict', methods=['GET', 'POST'])
 def predict():
     if request.method == 'POST':
-        # # Get the image from post request
-        # img = base64_to_pil(request.json)
+        # Get the image from post request
+        img = base64_to_pil(request.json)
 
-        # # Make prediction
-        # preds1 = model_predict1(img, model_1)
-        # index_pred1 = np.argmax(preds1)
+        # Make prediction
+        preds1 = model_predict1(img, model_1)
+        index_pred1 = np.argmax(preds1)
 
-        # # Confidence
-        # confidence1 = "{}".format(preds1[0][index_pred1])
-        # index = 0
-        # result = class_names[index_pred1]
-        # index = index_pred1
-        # confidence = float(confidence1)*100
+        # Confidence
+        confidence1 = "{}".format(preds1[0][index_pred1])
+        index = 0
+        result = class_names[index_pred1]
+        index = index_pred1
+        confidence = float(confidence1)*100
 
-        # # Read description from excel file according to the prediction of given image
-        # data = pd.read_excel(r'./website/descriptions.xlsx')
-        # df = pd.DataFrame(
-        #     data, columns=['Label', 'Class', 'Scientific name', 'Genus', 'Habitat'])
-        # row = df.iloc[index]
-        # myDes = []
-        # myDes.append(round(confidence, 2))
-        # myDes.extend([row[1], row[2], row[3], row[4]])
+        # Read description from excel file according to the prediction of given image
+        data = pd.read_excel(r'./website/descriptions.xlsx')
+        df = pd.DataFrame(
+            data, columns=['Label', 'Class', 'Scientific name', 'Genus', 'Habitat'])
+        row = df.iloc[index]
+        myDes = []
+        myDes.append(round(confidence, 2))
+        myDes.extend([row[1], row[2], row[3], row[4]])
 
-        # # Return predicted class, confidence and description.
-        # return jsonify(result=[result, 'Class:\t'+str(myDes[1]), 'Confidence:\t'+str(myDes[0])+'%', 'Scientific name:\t'+str(myDes[2]), 'Genus:\t'+str(myDes[3]), 'Habitat:\t'+str(myDes[4])])
-        return jsonify('hello')
+        # Return predicted class, confidence and description.
+        return jsonify(result=[result, 'Class:\t'+str(myDes[1]), 'Confidence:\t'+str(myDes[0])+'%', 'Scientific name:\t'+str(myDes[2]), 'Genus:\t'+str(myDes[3]), 'Habitat:\t'+str(myDes[4])])
     return None
 
 #User Management page
