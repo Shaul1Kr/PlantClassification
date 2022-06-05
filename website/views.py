@@ -7,6 +7,7 @@ import random
 from . import db
 import json
 import pandas as pd
+from PIL import Image
 # TensorFlow and tf.keras
 import tensorflow as tf
 from tensorflow import keras
@@ -177,3 +178,21 @@ def writeTofile(data, filename):
     with open(filename, 'wb') as file:
         file.write(data)
     print("Stored blob data into: ", filename, "\n")
+
+def insertBLOB(userId, name, photo):
+        photo = convertToBinaryData(photo)
+        # print(photo)
+        newPhoto = Photos(userId=userId, name=name,photo=photo)
+        db.session.add(newPhoto)
+        db.session.commit()
+
+@views.route('/saveImage', methods=['GET', 'POST'])
+def saveImage():
+    if request.method == 'POST':
+        img = request.files
+        print(img.get('files').filename, img.get('files'))
+        img1 = Image.open(img.get('files'))
+        img1 = img1.save('savedimage.jpg')
+        insertBLOB(current_user.id,img1, img.get('files').filename)
+        return 'Ok'
+    return None
