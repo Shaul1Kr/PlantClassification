@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for, session
 from flask_login import login_required, current_user
 from sqlalchemy import null
-from .models import User
+from .models import User, Photos
 from werkzeug.security import generate_password_hash, check_password_hash
 import random
 from . import db
@@ -70,17 +70,16 @@ def homePage():
 @views.route("/photos")
 @login_required
 def photos():
-    # def readBlobData(userId):
-    #     record = Photos.query.filter_by(userId = userId).all()
-    #     print(record)
-    #     for row in record:
-    #         print("Id = ", row[0], "Name = ", row[1])
-    #         name = row[1]
-    #         photo = row[2]
-    #         print(photo)
-    #         # print("Storing employee image and resume on disk \n")
-    #         # photoPath = "E:\pynative\Python\photos\db_data\\" + name + ".jpg"
-    #         # writeTofile(photo, photoPath)
+    record = Photos.query.filter_by(userId = userId).all()
+#     print(record)
+#     for row in record:
+#         print("Id = ", row[0], "Name = ", row[1])
+#         name = row[1]
+#         photo = row[2]
+#         print(photo)
+#         # print("Storing employee image and resume on disk \n")
+#         # photoPath = "E:\pynative\Python\photos\db_data\\" + name + ".jpg"
+#         # writeTofile(photo, photoPath)
 
     # readBlobData(1)
     photos = ["../static/photos/1.jpg", "../static/photos/2.jpg", "../static/photos/3.jpg","../static/photos/4.jpg", "../static/photos/5.jpg", "../static/photos/6.jpg", "../static/photos/7.jpg"]
@@ -179,12 +178,7 @@ def writeTofile(data, filename):
         file.write(data)
     print("Stored blob data into: ", filename, "\n")
 
-def insertBLOB(userId, name, photo):
-        photo = convertToBinaryData(photo)
-        # print(photo)
-        newPhoto = Photos(userId=userId, name=name,photo=photo)
-        db.session.add(newPhoto)
-        db.session.commit()
+
 
 @views.route('/saveImage', methods=['GET', 'POST'])
 def saveImage():
@@ -193,6 +187,16 @@ def saveImage():
         print(img.get('files').filename, img.get('files'))
         img1 = Image.open(img.get('files'))
         img1 = img1.save('savedimage.jpg')
-        insertBLOB(current_user.id,img1, img.get('files').filename)
+        photo = convertToBinaryData('./savedimage.jpg')
+        newPhoto = Photos(userId=current_user.id, photo=photo,name=img.get('files').filename)
+        db.session.add(newPhoto)
+        db.session.commit()
         return 'Ok'
     return None
+
+def insertBLOB(userId, name, photo):
+        photo = convertToBinaryData(photo)
+        # print(photo)
+        newPhoto = Photos(userId=current_user.id, photo=img1,name=img.get('files').filename)
+        db.session.add(newPhoto)
+        db.session.commit()
