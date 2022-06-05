@@ -142,7 +142,7 @@ content %}
     predictImage(submitFile);
   }
   function predictImage(image) {
-    console.log("ASDAD", image);
+    console.log("ASDAD");
     fetch("/predict", {
       method: "POST",
       headers: {
@@ -153,6 +153,7 @@ content %}
       .then((resp) => {
         if (resp.ok)
           resp.json().then((data) => {
+            console.log("HERE");
             displayDescription(data);
           });
       })
