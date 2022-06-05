@@ -1,0 +1,5 @@
+{
+    "appService.showBuildDuringDeployPrompt": false,
+    "appService.defaultWebAppToDeploy": "/subscriptions/db6e8545-5c55-4abd-812c-62b38fa2f421/microsoft.web/sites/subscriptions/db6e8545-5c55-4abd-812c-62b38fa2f421/resourceGroups/SCE/providers/Microsoft.Web/sites/PlantClassification",
+    "appService.deploySubpath": "."
+}
