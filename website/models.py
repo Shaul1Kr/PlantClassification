@@ -9,8 +9,11 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(150))
     admin = db.Column(db.Boolean)
 
+
 class Photos(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     userId = db.Column(db.Integer)
     photo = db.Column(db.BLOB)
     name = db.Column(db.String(150))
+    date = db.Column(db.String(150))
+    class_predict = db.Column(db.String(150))

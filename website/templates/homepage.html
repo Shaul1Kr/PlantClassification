@@ -1,231 +1,232 @@
 {% extends "base.html" %} {% block title %}Home Page{% endblock %} {% block
-  content %}
-  <div style="display: flex; justify-content: center; margin-top: 5px">
-    <div
-      class="preview"
-      style="
-        width: 425px;
-        height: 299px;
-        background: #ffffff;
-        border: 2px dashed #000000;
-        margin-top: 5px;
-        justify-content: center;
-        display: flex;
-        align-items: center;
-      "
-    >
-      <input
-        type="file"
-        style="width: 425px; height: 299px; padding: 130px 100px"
-        id="image_uploads"
-        name="image_uploads"
-        accept=".jpg, .jpeg, .png"
-      />
-    </div>
-  </div>
-  
+content %}
+<div style="display: flex; justify-content: center; margin-top: 5px">
   <div
-    class="button"
-    style="display: flex; justify-content: center; margin-top: 10px; gap: 25px"
+    class="preview"
+    style="
+      width: 425px;
+      height: 299px;
+      background: #ffffff;
+      border: 2px dashed #000000;
+      margin-top: 5px;
+      justify-content: center;
+      display: flex;
+      align-items: center;
+    "
   >
     <input
-      type="button"
-      value="Search"
-      style="
-        width: 205px;
-        height: 63px;
-        background: #65bf43;
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-        color: #ffffff;
-      "
-      onclick="submitImage();"
-    />
-    <input
-      value="Clear"
-      style="
-        width: 205px;
-        height: 63px;
-        background: #65bf43;
-        box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
-        color: #ffffff;
-        text-align: center;
-        cursor: pointer;
-        border-color: buttonborder;
-      "
-      onClick="window.location.href=window.location.href"
+      type="file"
+      style="width: 425px; height: 299px; padding: 130px 100px"
+      id="image_uploads"
+      name="image_uploads"
+      accept=".jpg, .jpeg, .png"
     />
   </div>
-  <div style="display: grid; justify-content: center; margin-left: 30px">
-    <div id="description" style="font-size: 20px"></div>
-    <div id="description1" style="font-size: 20px"></div>
-    <div id="description2" style="font-size: 20px"></div>
-    <div id="description3" style="font-size: 20px"></div>
-    <div id="description4" style="font-size: 20px"></div>
-    <div id="description5" style="font-size: 20px"></div>
-    <div id="description6" style="font-size: 20px"></div>
-    <div id="description7" style="font-size: 20px"></div>
-    <div id="description8" style="font-size: 20px"></div>
-    <button
-      id="save"
-      style="
-        width: 205px;
-        height: 63px;
-        background: rgb(101, 191, 67);
-        box-shadow: rgb(0 0 0 / 25%) 0px 4px 4px;
-        color: rgb(255, 255, 255);
-        text-align: center;
-        cursor: pointer;
-        border-color: buttonborder;
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
-        display: none;
-      "
-      onclick="saveImage();"
-    >
-      Save The Photo
-    </button>
-  </div>
-  
-  <script>
-    const input = document.querySelector("input");
-    const preview = document.querySelector(".preview");
-    const image_uploads = document.getElementById("image_uploads");
-    const description = document.getElementById("description");
-    const description1 = document.getElementById("description1");
-    const description2 = document.getElementById("description2");
-    const description3 = document.getElementById("description3");
-    const description4 = document.getElementById("description4");
-    const description5 = document.getElementById("description5");
-    const description6 = document.getElementById("description6");
-    const description7 = document.getElementById("description7");
-    const description8 = document.getElementById("description8");
-    let submitFile;
-    let imagefile;
-    input.addEventListener("change", updateImageDisplay);
-    const fileTypes = [
-      "image/apng",
-      "image/bmp",
-      "image/gif",
-      "image/jpeg",
-      "image/pjpeg",
-      "image/png",
-      "image/svg+xml",
-      "image/tiff",
-      "image/webp",
-      "image/x-icon",
-    ];
-  
-    function validFileType(file) {
-      return fileTypes.includes(file.type);
+</div>
+
+<div
+  class="button"
+  style="display: flex; justify-content: center; margin-top: 10px; gap: 25px"
+>
+  <input
+    type="button"
+    value="Search"
+    style="
+      width: 205px;
+      height: 63px;
+      background: #65bf43;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      color: #ffffff;
+    "
+    onclick="submitImage();"
+  />
+  <input
+    value="Clear"
+    style="
+      width: 205px;
+      height: 63px;
+      background: #65bf43;
+      box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
+      color: #ffffff;
+      text-align: center;
+      cursor: pointer;
+      border-color: buttonborder;
+    "
+    onClick="window.location.href=window.location.href"
+  />
+</div>
+<div style="display: grid; justify-content: center; margin-left: 30px">
+  <div id="description" style="font-size: 20px"></div>
+  <div id="description1" style="font-size: 20px"></div>
+  <div id="description2" style="font-size: 20px"></div>
+  <div id="description3" style="font-size: 20px"></div>
+  <div id="description4" style="font-size: 20px"></div>
+  <div id="description5" style="font-size: 20px"></div>
+  <div id="description6" style="font-size: 20px"></div>
+  <div id="description7" style="font-size: 20px"></div>
+  <div id="description8" style="font-size: 20px"></div>
+  <button
+    id="save"
+    style="
+      width: 205px;
+      height: 63px;
+      background: rgb(101, 191, 67);
+      box-shadow: rgb(0 0 0 / 25%) 0px 4px 4px;
+      color: rgb(255, 255, 255);
+      text-align: center;
+      cursor: pointer;
+      border-color: buttonborder;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      display: none;
+    "
+    onclick="saveImage();"
+  >
+    Save The Photo
+  </button>
+</div>
+
+<script>
+  const input = document.querySelector("input");
+  const preview = document.querySelector(".preview");
+  const image_uploads = document.getElementById("image_uploads");
+  const description = document.getElementById("description");
+  const description1 = document.getElementById("description1");
+  const description2 = document.getElementById("description2");
+  const description3 = document.getElementById("description3");
+  const description4 = document.getElementById("description4");
+  const description5 = document.getElementById("description5");
+  const description6 = document.getElementById("description6");
+  const description7 = document.getElementById("description7");
+  const description8 = document.getElementById("description8");
+  let submitFile;
+  let imagefile;
+  input.addEventListener("change", updateImageDisplay);
+  const fileTypes = [
+    "image/apng",
+    "image/bmp",
+    "image/gif",
+    "image/jpeg",
+    "image/pjpeg",
+    "image/png",
+    "image/svg+xml",
+    "image/tiff",
+    "image/webp",
+    "image/x-icon",
+  ];
+
+  function validFileType(file) {
+    return fileTypes.includes(file.type);
+  }
+
+  function updateImageDisplay() {
+    while (preview.firstChild) {
+      preview.removeChild(preview.firstChild);
     }
-  
-    function updateImageDisplay() {
-      while (preview.firstChild) {
-        preview.removeChild(preview.firstChild);
-      }
-  
-      const curFiles = input.files;
-      imagefile = input.files;
-      if (curFiles.length === 0) {
+
+    const curFiles = input.files;
+    imagefile = input.files;
+    if (curFiles.length === 0) {
+      const para = document.createElement("p");
+      para.textContent = "No files currently selected for upload";
+      preview.appendChild(para);
+    } else {
+      for (const file of curFiles) {
+        const listItem = document.createElement("div");
+        preview.appendChild(listItem);
         const para = document.createElement("p");
-        para.textContent = "No files currently selected for upload";
-        preview.appendChild(para);
-      } else {
-        for (const file of curFiles) {
-          const listItem = document.createElement("div");
-          preview.appendChild(listItem);
-          const para = document.createElement("p");
-          if (validFileType(file)) {
-            previewFile(file, listItem);
-          } else {
-            para.textContent = `File name ${file.name}: Not a valid file type. Update your selection.`;
-            listItem.appendChild(para);
-          }
+        if (validFileType(file)) {
+          previewFile(file, listItem);
+        } else {
+          para.textContent = `File name ${file.name}: Not a valid file type. Update your selection.`;
+          listItem.appendChild(para);
         }
       }
     }
-    function previewFile(file, listItem) {
-      // show the preview of the image
-      var fileName = encodeURI(file.name);
-      var reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onloadend = () => {
-        const image = document.createElement("img");
-        image.style.cssText = "width: 425px;height: 299px;";
-        image.id = "image-display";
-        image.src = URL.createObjectURL(file);
-        submitFile = reader.result;
-        listItem.appendChild(image);
-      };
+  }
+  function previewFile(file, listItem) {
+    // show the preview of the image
+    var fileName = encodeURI(file.name);
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      const image = document.createElement("img");
+      image.style.cssText = "width: 425px;height: 299px;";
+      image.id = "image-display";
+      image.src = URL.createObjectURL(file);
+      submitFile = reader.result;
+      listItem.appendChild(image);
+    };
+  }
+  function submitImage() {
+    // action for the submit button
+    var imageDisplay = document.getElementById("image-display");
+
+    if (!imageDisplay || !submitFile.startsWith("data")) {
+      window.alert("Please select an image before submit.");
+      return;
     }
-    function submitImage() {
-      // action for the submit button
-      var imageDisplay = document.getElementById("image-display");
-  
-      if (!imageDisplay || !submitFile.startsWith("data")) {
-        window.alert("Please select an image before submit.");
-        return;
-      }
-      // call the predict function of the backend
-      predictImage(submitFile);
-    }
-    function predictImage(image) {
-      fetch("/predict", {
+    // call the predict function of the backend
+    predictImage(submitFile);
+  }
+  function predictImage(image) {
+    fetch("/predict", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(image),
+    })
+      .then((resp) => {
+        if (resp.ok)
+          resp.json().then((data) => {
+            displayDescription(data);
+          });
+      })
+      .catch((err) => {
+        console.log("An error occured", err.message);
+        window.alert("Oops! Something went wrong.");
+      });
+  }
+  function displayDescription(data) {
+    // display the result
+    description.innerHTML = data.result[1];
+    description1.innerHTML = data.result[2];
+    description2.innerHTML = data.result[3];
+    description3.innerHTML = data.result[4];
+    description4.innerHTML = data.result[5];
+    description5.innerHTML = data.result[6];
+    description6.innerHTML = data.result[7];
+    description7.innerHTML = data.result[8];
+    description8.innerHTML = data.result[9];
+
+    document.getElementById("save").style.display = "flex";
+  }
+
+  function saveImage() {
+    var imageDisplay = document.getElementById("image-display").src;
+    var imageUpload = document.getElementById("image_uploads");
+    const class_description = description.innerHTML;
+    let data = new FormData();
+    console.log("imagefile", imagefile);
+    data.append("files", imagefile[0]);
+    data.append("name", imagefile[0].name);
+    window.alert("Photo saved to gallery");
+    for (const file of imagefile) {
+      fetch("/saveImage", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(image),
+        headers: { class_description: class_description },
+        body: data,
       })
         .then((resp) => {
-          if (resp.ok)
-            resp.json().then((data) => {
-              displayDescription(data);
-            });
+          if (resp.ok) console.log(resp);
         })
         .catch((err) => {
           console.log("An error occured", err.message);
           window.alert("Oops! Something went wrong.");
         });
     }
-    function displayDescription(data) {
-      // display the result
-      description.innerHTML = data.result[1];
-      description1.innerHTML = data.result[2];
-      description2.innerHTML = data.result[3];
-      description3.innerHTML = data.result[4];
-      description4.innerHTML = data.result[5];
-      description5.innerHTML = data.result[6];
-      description6.innerHTML = data.result[7];
-      description7.innerHTML = data.result[8];
-      description8.innerHTML = data.result[9];
-
-      document.getElementById("save").style.display = "flex";
-    }
-  
-    function saveImage() {
-      var imageDisplay = document.getElementById("image-display").src;
-      var imageUpload = document.getElementById("image_uploads");
-      let data = new FormData();
-      console.log("imagefile", imagefile);
-      data.append("files", imagefile[0]);
-      data.append("name", imagefile[0].name);
-      console.log("data", data.get("files"));
-      window.alert("Photo saved to gallery");
-      for (const file of imagefile) {
-        fetch("/saveImage", {
-          method: "POST",
-          body: data,
-        })
-          .then((resp) => {
-            if (resp.ok) console.log(resp);
-          })
-          .catch((err) => {
-            console.log("An error occured", err.message);
-            window.alert("Oops! Something went wrong.");
-          });
-      }
-    }
-  </script>
-  {% endblock %}
+  }
+</script>
+{% endblock %}
