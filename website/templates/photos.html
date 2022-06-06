@@ -82,11 +82,12 @@ content %}
     class="row"
     style="margin-left: 60px; width: 80%; margin-top: 1%; margin-bottom: 10%"
   >
-    {%for cat in photos%}
+    {%for i in range(0, len)%}
     <div class="responsive">
       <div class="gallery">
-        <img src="{{cat}}" alt="Cinque Terre" width="600" height="400" />
-        <div class="desc">Add a description of the image here</div>
+        <img src="{{photos[i]}}" alt="Cinque Terre" width="600" height="400" />
+        <div class="desc">Class Name: {{predicts[i]}}</div>
+        <div class="desc">Upload Date: {{dates[i]}}</div>
       </div>
     </div>
     {%endfor%}

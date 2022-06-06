@@ -61,11 +61,15 @@ def homePage():
 def photos():
     records = Photos.query.filter_by(userId=current_user.id).all()
     all_photos = []
+    dates = []
+    predicts = []
     for photo_record in records:
         photoPath = 'website/static/photos/' + photo_record.name
         writeTofile(photo_record.photo, photoPath)
         all_photos.append("../static/photos/" + photo_record.name)
-    return render_template("photos.html", photos=all_photos, user=current_user)
+        dates.append(photo_record.date)
+        predicts.append(photo_record.class_predict)
+    return render_template("photos.html", photos=all_photos, dates=dates, predicts=predicts, user=current_user, len=len(all_photos))
 
 # User Settings
 
@@ -177,7 +181,6 @@ def saveImage():
         payload = request.headers
         class_predict = payload['class_description']
         today = date.today()
-        print("IASDSADAS", class_predict[7:])
         img1 = Image.open(img.get('files'))
         img1 = img1.save('savedimage.jpg')
         photo = convertToBinaryData('./savedimage.jpg')
