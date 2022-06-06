@@ -1,12 +1,13 @@
 from flask import Blueprint, render_template, request, flash, jsonify, redirect, url_for, session
 from flask_login import login_required, current_user
 from sqlalchemy import null
-from .models import User
+from .models import User, Photos
 from werkzeug.security import generate_password_hash, check_password_hash
 import random
 from . import db
 import json
 import pandas as pd
+from PIL import Image
 # TensorFlow and tf.keras
 import tensorflow as tf
 from tensorflow import keras
@@ -69,22 +70,14 @@ def homePage():
 @views.route("/photos")
 @login_required
 def photos():
-    # def readBlobData(userId):
-    #     record = Photos.query.filter_by(userId = userId).all()
-    #     print(record)
-    #     for row in record:
-    #         print("Id = ", row[0], "Name = ", row[1])
-    #         name = row[1]
-    #         photo = row[2]
-    #         print(photo)
-    #         # print("Storing employee image and resume on disk \n")
-    #         # photoPath = "E:\pynative\Python\photos\db_data\\" + name + ".jpg"
-    #         # writeTofile(photo, photoPath)
-
-    # readBlobData(1)
-    photos = ["../static/photos/1.jpg", "../static/photos/2.jpg", "../static/photos/3.jpg","../static/photos/4.jpg", "../static/photos/5.jpg", "../static/photos/6.jpg", "../static/photos/7.jpg"]
-
-    return render_template("photos.html", photos=photos, user=current_user)
+    records = Photos.query.filter_by(userId = current_user.id).all()
+    all_photos = []
+    for photo_record in records:
+        photoPath = 'website/static/photos/' + photo_record.name
+        writeTofile(photo_record.photo, photoPath)
+        all_photos.append("../static/photos/" + photo_record.name)
+    print(all_photos)
+    return render_template("photos.html", photos=all_photos, user=current_user)
 
 # User Settings
 
@@ -129,14 +122,16 @@ def predict():
         # Read description from excel file according to the prediction of given image
         data = pd.read_excel(r'./website/descriptions.xlsx')
         df = pd.DataFrame(
-            data, columns=['Label', 'Class', 'Scientific name', 'Genus', 'Habitat'])
+            data, columns=['Label','Class','Scientific_name','Watering','Sun_Exposure','Soil_Type','Bloom_Time','Pests_Diseases','Toxicity'])
+            
+
         row = df.iloc[index]
         myDes = []
         myDes.append(round(confidence, 2))
-        myDes.extend([row[1], row[2], row[3], row[4]])
+        myDes.extend([row[1], row[2], row[3], row[4],row[5], row[6], row[7], row[8]])
 
         # Return predicted class, confidence and description.
-        return jsonify(result=[result, 'Class:\t'+str(myDes[1]), 'Confidence:\t'+str(myDes[0])+'%', 'Scientific name:\t'+str(myDes[2]), 'Genus:\t'+str(myDes[3]), 'Habitat:\t'+str(myDes[4])])
+        return jsonify(result=[result, 'Class:\t'+str(myDes[1]), 'Confidence:\t'+str(myDes[0])+'%', 'Scientific name:\t'+str(myDes[2]), 'Watering:\t'+str(myDes[3]), 'Sun Exposure:\t'+str(myDes[4]), 'Soil Type:\t'+str(myDes[5]),'Bloom Time:\t'+str(myDes[6]),'Pests & Diseases:\t'+str(myDes[7]),'Toxicity:\t'+str(myDes[8])])
     return None
 
 #User Management page
@@ -177,3 +172,26 @@ def writeTofile(data, filename):
     with open(filename, 'wb') as file:
         file.write(data)
     print("Stored blob data into: ", filename, "\n")
+
+
+
+@views.route('/saveImage', methods=['GET', 'POST'])
+def saveImage():
+    if request.method == 'POST':
+        img = request.files
+        print(img.get('files').filename, img.get('files'))
+        img1 = Image.open(img.get('files'))
+        img1 = img1.save('savedimage.jpg')
+        photo = convertToBinaryData('./savedimage.jpg')
+        newPhoto = Photos(userId=current_user.id, photo=photo,name=img.get('files').filename)
+        db.session.add(newPhoto)
+        db.session.commit()
+        return 'Ok'
+    return None
+
+def insertBLOB(userId, name, photo):
+        photo = convertToBinaryData(photo)
+        # print(photo)
+        newPhoto = Photos(userId=current_user.id, photo=img1,name=img.get('files').filename)
+        db.session.add(newPhoto)
+        db.session.commit()
