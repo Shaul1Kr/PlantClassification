@@ -61,6 +61,10 @@
     <div id="description2" style="font-size: 20px"></div>
     <div id="description3" style="font-size: 20px"></div>
     <div id="description4" style="font-size: 20px"></div>
+    <div id="description5" style="font-size: 20px"></div>
+    <div id="description6" style="font-size: 20px"></div>
+    <div id="description7" style="font-size: 20px"></div>
+    <div id="description8" style="font-size: 20px"></div>
     <button
       id="save"
       style="
@@ -92,6 +96,10 @@
     const description2 = document.getElementById("description2");
     const description3 = document.getElementById("description3");
     const description4 = document.getElementById("description4");
+    const description5 = document.getElementById("description5");
+    const description6 = document.getElementById("description6");
+    const description7 = document.getElementById("description7");
+    const description8 = document.getElementById("description8");
     let submitFile;
     let imagefile;
     input.addEventListener("change", updateImageDisplay);
@@ -188,6 +196,11 @@
       description2.innerHTML = data.result[3];
       description3.innerHTML = data.result[4];
       description4.innerHTML = data.result[5];
+      description5.innerHTML = data.result[6];
+      description6.innerHTML = data.result[7];
+      description7.innerHTML = data.result[8];
+      description8.innerHTML = data.result[9];
+
       document.getElementById("save").style.display = "flex";
     }
   

@@ -122,14 +122,16 @@ def predict():
         # Read description from excel file according to the prediction of given image
         data = pd.read_excel(r'./website/descriptions.xlsx')
         df = pd.DataFrame(
-            data, columns=['Label', 'Class', 'Scientific name', 'Genus', 'Habitat'])
+            data, columns=['Label','Class','Scientific_name','Watering','Sun_Exposure','Soil_Type','Bloom_Time','Pests_Diseases','Toxicity'])
+            
+
         row = df.iloc[index]
         myDes = []
         myDes.append(round(confidence, 2))
-        myDes.extend([row[1], row[2], row[3], row[4]])
+        myDes.extend([row[1], row[2], row[3], row[4],row[5], row[6], row[7], row[8]])
 
         # Return predicted class, confidence and description.
-        return jsonify(result=[result, 'Class:\t'+str(myDes[1]), 'Confidence:\t'+str(myDes[0])+'%', 'Scientific name:\t'+str(myDes[2]), 'Genus:\t'+str(myDes[3]), 'Habitat:\t'+str(myDes[4])])
+        return jsonify(result=[result, 'Class:\t'+str(myDes[1]), 'Confidence:\t'+str(myDes[0])+'%', 'Scientific name:\t'+str(myDes[2]), 'Watering:\t'+str(myDes[3]), 'Sun Exposure:\t'+str(myDes[4]), 'Soil Type:\t'+str(myDes[5]),'Bloom Time:\t'+str(myDes[6]),'Pests & Diseases:\t'+str(myDes[7]),'Toxicity:\t'+str(myDes[8])])
     return None
 
 #User Management page
