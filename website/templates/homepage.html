@@ -1,6 +1,8 @@
 {% extends "base.html" %} {% block title %}Home Page{% endblock %} {% block
 content %}
-<div style="display: flex; justify-content: center; margin-top: 5px">
+<div
+  style="display: inline-flex; margin-top: 5px; position: relative; left: 36%"
+>
   <div
     class="preview"
     style="
@@ -52,10 +54,18 @@ content %}
       cursor: pointer;
       border-color: buttonborder;
     "
-    onClick="window.location.href=window.location.href"
+    onClick="refreshPage()"
   />
 </div>
-<div style="display: grid; justify-content: center; margin-left: 30px">
+<div
+  style="
+    display: inline-block;
+    width: 28%;
+    margin: 0 0 0 14px;
+    position: relative;
+    bottom: 380px;
+  "
+>
   <div id="description" style="font-size: 20px"></div>
   <div id="description1" style="font-size: 20px"></div>
   <div id="description2" style="font-size: 20px"></div>
@@ -65,12 +75,25 @@ content %}
   <div id="description6" style="font-size: 20px"></div>
   <div id="description7" style="font-size: 20px"></div>
   <div id="description8" style="font-size: 20px"></div>
+</div>
+
+<div
+  class="buttom"
+  style="
+    display: flex;
+    margin: 0px 5% 0 0px;
+    justify-content: space-around;
+    position: absolute;
+    bottom: 215px;
+    left: 645px;
+  "
+>
   <button
     id="save"
     style="
       width: 205px;
       height: 63px;
-      background: rgb(101, 191, 67);
+      background: #65bf43;
       box-shadow: rgb(0 0 0 / 25%) 0px 4px 4px;
       color: rgb(255, 255, 255);
       text-align: center;
@@ -227,6 +250,9 @@ content %}
           window.alert("Oops! Something went wrong.");
         });
     }
+  }
+  function refreshPage() {
+    window.location.reload();
   }
 </script>
 {% endblock %}
